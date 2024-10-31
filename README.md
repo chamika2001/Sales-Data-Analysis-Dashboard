@@ -17,3 +17,10 @@ The dataset used in this project contains sales information including Order ID, 
 
 ## Findings
 - Insights on sales trends can be observed through the generated charts.
+# Sales Data Analysis Project
+
+## Monthly Sales Bar Chart
+![Monthly Sales Bar Chart](monthly_sales_bar_chart.png)
+
+## Product Sales Pie Chart
+![Product Sales Pie Chart](product_sales_pie_chart.png)
