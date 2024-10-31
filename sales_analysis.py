@@ -18,7 +18,6 @@ sales_data = sales_data.drop_duplicates()
 sales_data['Order Date'] = pd.to_datetime(sales_data['Order Date'], errors='coerce')
 
 # Create a new column for total sales
-# Ensure 'Quantity Ordered' and 'Price Each' are numeric
 sales_data['Quantity Ordered'] = pd.to_numeric(sales_data['Quantity Ordered'], errors='coerce')
 sales_data['Price Each'] = pd.to_numeric(sales_data['Price Each'], errors='coerce')
 sales_data['Sales'] = sales_data['Quantity Ordered'] * sales_data['Price Each']
@@ -26,21 +25,26 @@ sales_data['Sales'] = sales_data['Quantity Ordered'] * sales_data['Price Each']
 # Extract month from 'Order Date' and convert to integer
 sales_data['Month'] = sales_data['Order Date'].dt.month.astype(int)
 
-# Check if the 'Sales' column is numeric
-print(sales_data['Sales'].dtypes)  # This should show 'float64' or 'int64'
-print(sales_data['Month'].dtypes)  # This should show 'int64'
-
 # Analyze monthly sales
 monthly_sales = sales_data.groupby('Month')['Sales'].sum()  # Groups by month and sums the sales
 
-# Print monthly sales for debugging
-print(monthly_sales)  # Check the monthly sales data
-
-# Plot monthly sales
+# Plot monthly sales bar chart
 plt.figure(figsize=(10, 6))
 monthly_sales.plot(kind='bar', color='skyblue')
 plt.title('Monthly Sales')
 plt.xlabel('Month')
 plt.ylabel('Sales in USD')
-plt.xticks(rotation=0)  # Rotate x-axis labels for better readability
+plt.xticks(rotation=0)
+plt.savefig('monthly_sales_bar_chart.png')  # Save bar chart as PNG
 plt.show()  # Display the bar chart
+
+# Analyze product sales
+product_sales = sales_data.groupby('Product Name')['Sales'].sum()  # Group by product and sum sales
+
+# Plot product sales pie chart
+plt.figure(figsize=(10, 6))
+product_sales.plot(kind='pie', autopct='%1.1f%%', startangle=90)
+plt.title('Sales Distribution by Product')
+plt.ylabel('')  # Remove y-label for better appearance
+plt.savefig('product_sales_pie_chart.png')  # Save pie chart as PNG
+plt.show()  # Display the pie chart
